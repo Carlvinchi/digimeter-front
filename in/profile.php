@@ -1,6 +1,10 @@
 <?php
     session_start();
-
+    if(!isset($_SESSION['user_id'])){
+      $domain = "http://localhost/digifront/in/login.php";
+      header("location: $domain");
+      exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +46,7 @@
         <div class="main-panel">
           <div class="content-wrapper">
           <!-- promotion flyer card -->
-          <?php include("./templates/flyercard.php")?>
+          <?php include("./templates/flyercard.php")?> 
 
           <!-- add meter modal -->
 
@@ -53,51 +57,10 @@
             <?php include("./templates/password-modal.php")?>
              <!-- summary info card -->
 
-            <div class="row">
-              <div class="col-sm-6 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h5>Revenue</h5>
-                    <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-8 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h2 class="mb-0">$32123</h2>
-                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
-                        </div>
-                        <h6 class="text-muted font-weight-normal">11.38% Since last month</h6>
-                      </div>
-                      <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col-sm-6 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h5>Sales</h5>
-                    <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-8 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h2 class="mb-0">$45850</h2>
-                          <p class="text-success ml-2 mb-0 font-weight-medium">+8.3%</p>
-                        </div>
-                        <h6 class="text-muted font-weight-normal"> 9.61% Since last month</h6>
-                      </div>
-                      <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-wallet-travel text-danger ml-auto"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <input type="hidden" id="user_id" value="<?php echo $_SESSION['user_id']?>">
-            </div>
 
             <!-- profile card -->
-          
+            <input type="hidden" id="user_id" value="<?php echo $_SESSION['user_id']?>">
             <div class="row">
               <div class="col-md-4 grid-margin stretch-card">
                 <div class="card">
@@ -129,11 +92,7 @@
                       <div class="col-12">
                         <div class="preview-list">
 
-
-
-
-
-                        <form class="forms-sample" id="profile" onsubmit="return false" autocomplete="off">
+                        <form class="forms-sample" id="p" onsubmit="return false" autocomplete="off">
 
                         
                         </form>
@@ -190,7 +149,7 @@
 							console.log(data);
                        //var ob  = JSON.parse(data);
                        
-                       var content = document.getElementById("profile"); 
+                       var content = document.getElementById("p"); 
                         content.innerHTML = content.innerHTML + data;
 						// We increase the value by 25 because we limit the results by 25
 						//document.getElementById("page_no").value = Number(page_no) + 25;

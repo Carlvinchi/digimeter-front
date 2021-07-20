@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>User Signup</title>
+    <title>Forgot Password</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -25,27 +25,20 @@
           <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
-                <h3 class="card-title text-left mb-3">Register</h3>
-                <form>
+                <h3 class="card-title text-left mb-3">Forgot Password</h3>
+                <form id="forgot-form" onsubmit="return false" autocomplete="off">
+                  
                   <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control p_input">
+                    <label> Enter Email</label>
+                    <input type="email" class="form-control p_input" id="email" name="email" required>
+                    <input type="hidden" class="form-control p_input" id="forgot" name="forgot" required>
                   </div>
-                  <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control p_input">
-                  </div>
-                  <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control p_input">
-                  </div>
+
                   
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-block enter-btn">Register</button>
+                    <input type="submit" name="submit" value="Submit" class="btn btn-primary btn-block enter-btn">
                   </div>
-                
-                  <p class="sign-up text-center">Already have an Account?<a href="login.php"> Login</a></p>
-                  <p class="terms">By creating an account you are accepting our<a href="#"> Terms & Conditions</a></p>
+
                 </form>
               </div>
             </div>
@@ -68,6 +61,7 @@
     <script src="assets/js/misc.js"></script>
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/todolist.js"></script>
+    <script src="js/admin-forgot.js"></script>
     <!-- endinject -->
   </body>
 </html>

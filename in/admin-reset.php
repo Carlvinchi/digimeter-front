@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head> 
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Forgot Password</title>
+    <title>Reset Password</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -25,21 +25,33 @@
           <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
-                <h3 class="card-title text-left mb-3">Forgot Password</h3>
-                <form id="forgot-form" onsubmit="return false" autocomplete="off">
+                <h3 class="card-title text-left mb-3">Reset</h3>
+                <form id="reset-form" onsubmit="return false" autocomplete="off">
                   
                   <div class="form-group">
-                    <label> Enter Email</label>
-                    <input type="email" class="form-control p_input" id="email" name="email" required>
-                    <input type="hidden" class="form-control p_input" id="forgot" name="forgot" required>
+                    
+                    <input type="hidden" class="form-control p_input" id="email" name="email" value="<?php echo $_GET['email'] ?>">
+
+                    <input type="hidden" class="form-control p_input" id="token" name="token" value="<?php echo $_GET['token'] ?>">
+                    <input type="hidden" class="form-control p_input" id="reset" name="reset" value="1">
                   </div>
 
+                  <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control p_input" id="pass1" name="pass1" required>
+                  </div>
+
+                   <div class="form-group">
+                    <label> Confirm Password</label>
+                    <input type="password" class="form-control p_input" id="pass2" name="pass2" required>
+                  </div>
                   
                   <div class="text-center">
-                    <input type="submit" name="submit" value="Submit" class="btn btn-primary btn-block enter-btn">
-                  </div>
-
+                    <input type="submit" name="submit" value="Reset" class="btn btn-primary btn-block enter-btn">
+                  </div> 
+                 
                 </form>
+
               </div>
             </div>
           </div>
@@ -61,7 +73,7 @@
     <script src="assets/js/misc.js"></script>
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/todolist.js"></script>
-    <script src="js/forgot.js"></script>
+    <script src="js/admin-forgot.js"></script>
     <!-- endinject -->
   </body>
 </html>

@@ -30,7 +30,7 @@ $(document).ready(function(){
             });    
     });
 
-
+ 
     // change password
     $("#change_password").on("submit", function(){
         
@@ -58,7 +58,7 @@ $(document).ready(function(){
 
                     if(data == "Success"){
                         alert(data);
-                        location.replace(frontURL+"login.php");
+                        location.replace(frontURL+"logout.php");
                     }
                         
                     else{

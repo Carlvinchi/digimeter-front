@@ -1,5 +1,10 @@
 <?php
     session_start();
+    if(!isset($_SESSION['admin_id'])){
+      $domain = "http://localhost/digifront/in/admin-login.php";
+      header("location: $domain");
+      exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +12,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Digimeter User Dashboard</title>
+    <title>Digimeter Meter Readings</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -29,7 +34,7 @@
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <!-- side navigation file -->
-      <?php include("./templates/nav.php")?>
+      <?php include("./templates/admin-nav.php")?>
 
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
@@ -93,8 +98,6 @@
 
             <!-- summary info card -->
 
-            
-            <?php include("./templates/admin-scard.php")?>
 
 
 

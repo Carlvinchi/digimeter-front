@@ -86,6 +86,7 @@
                         </div>
                         <div class="form-input">
                             <input type="text" name="digital_addr" id="digital_addr" placeholder="Digital Address" />
+                            <p class="terms">By creating an account you are accepting our<a href="#"> Terms & Conditions</a></p>
                         </div>
                     </div>
                 </fieldset>

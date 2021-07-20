@@ -1,5 +1,10 @@
 <?php
     session_start();
+    if(!isset($_SESSION['admin_id'])){
+      $domain = "http://localhost/digifront/in/admin-login.php";
+      header("location: $domain");
+      exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +34,7 @@
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <!-- side navigation file -->
-      <?php include("./templates/nav.php")?>
+      <?php include("./templates/admin-nav.php")?>
 
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
@@ -94,7 +99,6 @@
             <!-- summary info card -->
 
             
-            <?php include("./templates/admin-scard.php")?>
 
 
 

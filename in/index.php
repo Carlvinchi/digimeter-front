@@ -1,5 +1,10 @@
 <?php
     session_start();
+    if(!isset($_SESSION['user_id'])){
+      $domain = "http://localhost/digifront/in/login.php";
+      header("location: $domain");
+      exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +30,7 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
-  <body>
+  <body> 
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <!-- side navigation file -->
@@ -372,7 +377,7 @@
 
                 }
             });
-        }
+        } 
 
         // function to confirm user action before deleting
 		function confirm_delete(customer_id,meter_id){

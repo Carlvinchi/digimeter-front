@@ -37,13 +37,13 @@
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between">
 
-                    <a href="forgot.php" class="forgot-pass">Forgot password</a>
+                    <a href="admin-forgot.php" class="forgot-pass">Forgot password</a>
                   </div>
                   <div class="text-center">
                     <input type="submit" name="submit" value="Login" class="btn btn-primary btn-block enter-btn">
                   </div>
                   
-                  <p class="sign-up">Don't have an Account?<a href="register.php"> Sign Up</a></p>
+                  
                 </form>
               </div>
             </div>

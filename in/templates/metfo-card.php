@@ -28,8 +28,11 @@
                           <h2 class="mb-0" id="bal"></h2>
                         
                         </div>
-                        
+                        <br>
+                        <button class="btn btn-success" id="borrow">Borrow Credit</button>
                       </div>
+                      
+
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                         <i class="icon-lg mdi mdi-wallet-travel text-danger ml-auto"></i>
                       </div>

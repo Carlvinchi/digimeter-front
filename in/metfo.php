@@ -1,16 +1,21 @@
 <?php
     session_start();
+    if(!isset($_SESSION['user_id'])){
+      $domain = "http://localhost/digifront/in/login.php";
+      header("location: $domain");
+      exit();
+    }
     $meter_id = $_GET["meter_id"];
     $customer_id = $_GET["customer_id"];
     $user_email = $_SESSION["user_email"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head> 
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Digimeter User Dashboard</title>
+    <title>Digimeter Meter Information</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -50,48 +55,7 @@
 
           <?php include("./templates/payments-modal.php")?>
 
-        <!-- edit meter modal -->
-
-            <?php include("./templates/edit-alias-meter-modal.php")?>
-
-            <!-- Modal to show delete confirmation-->
-				<div class="modal fade bs-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
-					<div class="modal-dialog modal-sm" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<center><h4 class="modal-title" id="deleteModalLabel">Confirm &emsp;&emsp;&emsp;&emsp;&emsp;
-									&emsp;</h4></center>
-						</div>
-						<div class="modal-body">
-							<p>Do you want to delete?</p>
-							<form  class="form-inline"   autocomplete="off" >
-								
-								
-							&emsp;
-						
-									<div class="form-group">
-
-									<button class="btn btn-danger" id="delete">Yes</button>
-									</div>
-									&emsp;
-									&emsp;
-									&emsp;
-									&emsp;
-									&emsp;
-									&emsp;
-									<div class="form-group">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-									</div>
-
-									
-							</form>
-
-						</div>
-						
-					</div>
-					</div>
-				</div>
+        
 
             <!-- summary info card -->
             <?php include("./templates/metfo-card.php")?>
@@ -107,7 +71,7 @@
                 </div>
               </div>
               
-            </div>
+            </div> 
 
           <!-- table contnent card file -->
           <div class="row ">
@@ -138,7 +102,7 @@
                         <tbody id="tr_list">
                         
 
-                        </tbody>
+                        </tbody> 
                       </table>
                       <br>
                       <center><input class="btn btn-primary" type="button" id="load_more" value="Load More"></center>
@@ -192,10 +156,18 @@
             get_meter_detail(customer_id,meter_id);
             get_meter_bal(meter_id);
             get_pay_sum(meter_id,customer_id)
-	
+          
+
 			$("#load_more").click(function() {
         load_more();
         
+		
+      });
+
+
+      $("#borrow").click(function() {
+        
+        borrow(meter_id,backURL,frontURL)
 		
       });
         });
@@ -314,6 +286,33 @@
                   var tt = document.getElementById("sum"); 
 						      //content.innerHTML = ""; 
                   tt.innerHTML = tt.innerHTML + d;
+
+                  
+                    }
+                }
+            );
+
+        }
+
+
+        function borrow(meter_id,backURL,frontURL){
+            //var backURL = "http://localhost/digi_rest/api/";
+            $.ajax(
+                {
+                    url: backURL+"web_get_alias_meters.php?meter_id="+meter_id+"&borrow",
+                    method: "GET",
+
+                    success: function(data){
+                      
+                      if(data == "Success"){
+                         alert(data);
+                         location.replace(frontURL+"index.php");
+                     }
+                         
+                     else{
+                         alert(data);
+                         
+                     }
 
                   
                     }

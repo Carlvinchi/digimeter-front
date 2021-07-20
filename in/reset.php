@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head> 
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,39 +25,33 @@
           <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
-                <h3 class="card-title text-left mb-3">Register</h3>
-                <form>
+                <h3 class="card-title text-left mb-3">Reset</h3>
+                <form id="reset-form" onsubmit="return false" autocomplete="off">
+                  
                   <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control p_input">
+                    
+                    <input type="hidden" class="form-control p_input" id="email" name="email" value="<?php echo $_GET['email'] ?>">
+
+                    <input type="hidden" class="form-control p_input" id="token" name="token" value="<?php echo $_GET['token'] ?>">
+                    <input type="hidden" class="form-control p_input" id="reset" name="reset" value="1">
                   </div>
-                  <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control p_input">
-                  </div>
+
                   <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control p_input">
+                    <input type="password" class="form-control p_input" id="pass1" name="pass1" required>
                   </div>
-                  <div class="form-group d-flex align-items-center justify-content-between">
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Remember me </label>
-                    </div>
-                    <a href="#" class="forgot-pass">Forgot password</a>
+
+                   <div class="form-group">
+                    <label> Confirm Password</label>
+                    <input type="password" class="form-control p_input" id="pass2" name="pass2" required>
                   </div>
+                  
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
-                  </div>
-                  <div class="d-flex">
-                    <button class="btn btn-facebook col mr-2">
-                      <i class="mdi mdi-facebook"></i> Facebook </button>
-                    <button class="btn btn-google col">
-                      <i class="mdi mdi-google-plus"></i> Google plus </button>
-                  </div>
-                  <p class="sign-up text-center">Already have an Account?<a href="#"> Sign Up</a></p>
-                  <p class="terms">By creating an account you are accepting our<a href="#"> Terms & Conditions</a></p>
+                    <input type="submit" name="submit" value="Reset" class="btn btn-primary btn-block enter-btn">
+                  </div> 
+                 
                 </form>
+
               </div>
             </div>
           </div>
@@ -79,6 +73,7 @@
     <script src="assets/js/misc.js"></script>
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/todolist.js"></script>
+    <script src="js/forgot.js"></script>
     <!-- endinject -->
   </body>
 </html>
