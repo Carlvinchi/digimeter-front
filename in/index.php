@@ -107,17 +107,17 @@
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
                           <h2 class="mb-0" id="total"></h2>
                       
-                        </div>
+                        </div> 
                         <h6 class="text-muted font-weight-normal">You can add more</h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
+                        <i class="icon-lg mdi mdi-speedometer text-primary ml-auto"></i>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
+ 
               <div class="col-sm-6 grid-margin">
                 <div class="card">
                   <div class="card-body">
@@ -131,7 +131,7 @@
                         <h6 class="text-muted font-weight-normal"> Avaible balance</h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-wallet-travel text-danger ml-auto"></i>
+                        <i class="icon-lg mdi mdi-wallet text-danger ml-auto"></i>
                       </div>
                     </div>
                   </div>
@@ -168,7 +168,9 @@
                             <th> Balance </th>
                             <th> Health Status </th>
                             <th> Lock Status </th>
-                            <th> Actions </th>
+                            <th> View Details </th>
+                            <th> Update </th>
+                            <th> Delete </th>
                           </tr>
                         </thead>
                         <tbody id="list">
@@ -177,9 +179,12 @@
                         </tbody>
                       </table>
                       <br>
-                      <center><input class="btn btn-primary" type="button" id="load_more" value="Load More"></center>
+                     
                     </div>
+                    <br>
+                    <center><input class="btn btn-primary" type="button" id="load_more" value="Load More"></center>
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -196,8 +201,8 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+     <!-- plugins:js -->
+     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="assets/vendors/chart.js/Chart.min.js"></script>
@@ -217,6 +222,7 @@
     <script src="assets/js/dashboard.js"></script>
     <script src="js/add-meter.js"></script>
     <script src="js/edit-alias.js"></script>
+    
     <script type="text/javascript">
         $(document).ready(function(){
             var backURL = "http://localhost/digi_rest/api/";

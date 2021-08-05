@@ -1,18 +1,18 @@
 <?php
     session_start();
-    if(!isset($_SESSION['admin_id'])){
-        $domain = "http://localhost/digifront/in/admin-login.php";
-        header("location: $domain");
-        exit();
-      }
-?> 
-<!DOCTYPE html>  
+    if(!isset($_SESSION['user_id'])){
+      $domain = "http://localhost/digifront/in/login.php";
+      header("location: $domain");
+      exit();
+    }
+?>
+<!DOCTYPE html>
 <html lang="en"> 
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Digimeter Admin Dashboard</title>
+    <title>Digimeter Dashboard</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -34,27 +34,27 @@
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <!-- side navigation file -->
-      <?php include("./templates/admin-nav.php")?>
+      <?php include("./templates/nav.php")?>
 
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_navbar.html -->
         <!-- top navigation file -->
-        <?php include("./templates/admin-top-nav.php")?>
+        <?php include("./templates/index-top-nav.php")?>
 
         <!-- partial -->
         <div class="main-panel">
-          <div class="content-wrapper">
-          <!-- promotion flyer card -->
-          <?php include("./templates/flyercard.php")?>
+        <div class="content-wrapper">
+        <!-- promotion flyer card -->
+        <?php include("./templates/flyercard.php")?>
 
-          <!-- add meter modal -->
+        <!-- add meter modal -->
 
-          <?php include("./templates/admin-add-meter.php")?>
+        <?php include("./templates/add-meter-modal.php")?>
 
-        <!-- top up modal -->
+        <!-- edit meter modal -->
 
-            <?php include("./templates/topup-modal.php")?>
+            <?php include("./templates/edit-alias-meter-modal.php")?>
 
             <!-- Modal to show delete confirmation-->
 				<div class="modal fade bs-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
@@ -97,19 +97,60 @@
 
             <!-- summary info card -->
 
-            
-            <?php include("./templates/admin-scard.php")?>
+            <div class="row">
+              <div class="col-sm-6 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h5>Meters</h5>
+                    <div class="row">
+                      <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                          <h2 class="mb-0" id="total"></h2>
+                      
+                        </div>
+                        <h6 class="text-muted font-weight-normal">You can add more</h6>
+                      </div>
+                      <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                        <i class="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-
+              <div class="col-sm-6 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h5>Balance</h5>
+                    <div class="row">
+                      <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                          <h2 class="mb-0" id="bal"></h2>
+                          
+                        </div>
+                        <h6 class="text-muted font-weight-normal"> Avaible balance</h6>
+                      </div>
+                      <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                        <i class="icon-lg mdi mdi-wallet-travel text-danger ml-auto"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
 
           <!-- table contnent card file -->
 
-
+          <input type="hidden" id="user" value="<?php echo $_SESSION['customer_id']?>">
           <div class="row ">
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Users
+                    <h4 class="card-title">Meters &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+                    &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+                    &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+                        <button class="btn btn-success mr-2" data-toggle="modal" data-target="#add-meter">+ Add Meter</button>
                     </h4>
                    
                     <div class="table-responsive">
@@ -119,20 +160,17 @@
                         <thead>
                           <tr>
                             
-                            <th> First Name </th>
-                            <th> Last Name </th>
-                            <th> Customer ID </th>
-                            <th> Email</th>
-                            <th> Phone </th>
-                            <th> Digital Addr </th>
-                            <th> Street</th>
-                            <th> City </th>
-                            <th> Region </th>
-                            <th> Last Login </th>
+                          <th> Meter Name </th>
+                            <th> Meter ID </th>
+                            <th> Balance </th>
+                            <th> Health Status </th>
+                            <th> Lock Status </th>
+                            <th> Actions </th>
+                            
                             
                           </tr>
                         </thead>
-                        <tbody id="users">
+                        <tbody id="list">
                           
 
                         </tbody>
@@ -159,6 +197,7 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
@@ -180,17 +219,16 @@
     <script src="assets/js/dashboard.js"></script>
     <script src="js/add-meter.js"></script>
     <script src="js/edit-alias.js"></script>
+    
     <script type="text/javascript">
         $(document).ready(function(){
             var backURL = "http://localhost/digi_rest/api/";
             var frontURL = "http://localhost/digifront/in/";
-            //var userid = document.getElementById("user").value;
+            var userid = document.getElementById("user").value;
             var page_no = document.getElementById("page_no").value;
 			//var page_no = document.getElementById("page_no").value;
-            load(backURL,page_no);
-            get_total_meters(backURL);
-            get_total_users();
-            //get_ifo(userid,backURL);
+            load(userid,backURL,page_no);
+            get_ifo(userid,backURL);
 	
 			$("#load_more").click(function() {
         load_more();
@@ -200,23 +238,20 @@
         });
 
 		//  function to automatically load data when page loads
-        function load(backURL,page_no){
-            console.log('fire')
+        function load(userid,backURL,page_no){
             $.ajax(
                 {
-                    url: backURL+"admin_service.php?no="+page_no+"&all_users",
+                    url: backURL+"web_get_alias_meters.php?customer_id="+userid+"&get_alias_meters&no="+page_no,
                     method: "GET",
 
                     success: function(data){
 						if(data != 0){
-                           // console.log(data);
-							var content = document.getElementById("users");  
+							var content = document.getElementById("list");  
                         content.innerHTML = content.innerHTML + data;
 						// We increase the value by 25 because we limit the results by 25
 						document.getElementById("page_no").value = Number(page_no) + 30;
 						}
 						else{
-                            console.log(data);
 							 $("#load_more").hide();
 						}
                        
@@ -229,23 +264,21 @@
         function load_more(){
           var backURL = "http://localhost/digi_rest/api/";
             var frontURL = "http://localhost/digifront/in/";
-            //var userid = document.getElementById("user").value;
+            var userid = document.getElementById("user").value;
             var page_no = document.getElementById("page_no").value;
             $.ajax(
                 {
-                    url: backURL+"admin_service.php?no="+page_no+"&all_users",
+                    url: backURL+"web_get_alias_meters.php?customer_id="+userid+"&alias_paginate&no="+page_no,
                     method: "GET",
 
                     success: function(data){
 						if(data != 0){
-                           // console.log(data);
-							var content = document.getElementById("users");  
-                        content.innerHTML = content.innerHTML + data;
+							var content = document.getElementById("list");  
+                  content.innerHTML = content.innerHTML + data;
 						// We increase the value by 25 because we limit the results by 25
 						document.getElementById("page_no").value = Number(page_no) + 30;
 						}
 						else{
-                            console.log(data);
 							 $("#load_more").hide();
 						}
                        
@@ -255,24 +288,28 @@
 
         }
 
-        function get_total_meters(backURL){
+        function get_ifo(userid,backURL){
             $.ajax(
                 {
-                    url: backURL+"admin_service.php?total_meters",
+                    url: backURL+"web_get_alias_meters.php?customer_id="+userid+"&met-info",
                     method: "GET",
 
                     success: function(data){
-						
-                  //jso = JSON.parse(data);
-                  console.log(data);
-              //console.log(jso[1].meter_account);
-              var content = document.getElementById("t_meter"); 
+						if(data != 0){
+                  jso = JSON.parse(data)
+							console.log(jso[0]);
+              console.log(jso[1].meter_account);
+              var content = document.getElementById("total"); 
 						      content.innerHTML = ""; 
-                  content.innerHTML = content.innerHTML + data;
+                  content.innerHTML = content.innerHTML + jso[0];
+
+              var item = document.getElementById("bal"); 
+						      item.innerHTML = ""; 
+                  item.innerHTML = item.innerHTML + jso[1].meter_account;
                       
 						// We increase the value by 25 because we limit the results by 25
 						//document.getElementById("page_no").value = Number(page_no) + 25;
-						
+						}
 						
                        
                     }
@@ -280,23 +317,26 @@
             );
 
         }
-        function get_total_users(){
+        function get_meter(customer_id,meter_id,){
             var backURL = "http://localhost/digi_rest/api/";
             $.ajax(
                 {
-                    url: backURL+"admin_service.php?total_users",
+                    url: backURL+"web_get_alias_meters.php?customer_id="+customer_id+"&single&meter_id="+meter_id,
                     method: "GET",
 
                     success: function(data){
-						
-                            console.log(data);
-							var append = document.getElementById("t_user"); 
+						if(data != 0){
+
+							var append = document.getElementById("ali"); 
 							append.innerHTML = ""; 
                         append.innerHTML = append.innerHTML + data;
-						
+						setTimeout(() => {  $("#edit-alias").modal('show'); }, 100);
 						// We increase the value by 25 because we limit the results by 25
 						//document.getElementById("page_no").value = Number(page_no) + 25;
-					
+						}
+						else{
+							 $("#load_more").hide();
+						}
                        
                     }
                 }
@@ -340,7 +380,7 @@
 
                 }
             });
-        }
+        } 
 
         // function to confirm user action before deleting
 		function confirm_delete(customer_id,meter_id){
@@ -406,37 +446,6 @@
                     if(data == "Success"){
                         alert(data);
                         location.replace(frontURL+"index.php");
-                    }
-                        
-                    else{
-                        alert(data);
-                        
-                    }
-
-                }
-            });
-        }
-
-
-        function add_payment(){
-            var backURL = "http://localhost/digi_rest/api/";
-            var frontURL = "http://localhost/digifront/in/";
-            
-            data = $('#direct-pay').serialize();
-            console.log(data);
-            
-            $.ajax({
-                url: backURL+"admin_service.php", 
-
-                method: "POST",
-
-                data: $('#direct-pay').serialize(),
-
-                success: function(data){
-
-                    if(data == "Success"){
-                        alert(data);
-                        location.replace(frontURL+"admin.php");
                     }
                         
                     else{

@@ -22,7 +22,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt="">
+                    
                     <p class="mb-0 d-none d-sm-block navbar-profile-name"><?php echo $_SESSION['first_name'] ?></p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
@@ -32,6 +32,16 @@
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
                   
                   <div class="dropdown-divider"></div>
+                  <a class="dropdown-item preview-item" href="admin-profile.php">
+                    <div class="preview-thumbnail">
+                      <div class="preview-icon bg-dark rounded-circle">
+                        <i class="mdi mdi-account text-primary"></i>
+                      </div>
+                    </div>
+                    <div class="preview-item-content">
+                      <p class="preview-subject mb-1">Profile</p>
+                    </div>
+                  </a>
                   
                   <a class="dropdown-item preview-item" href="admin-logout.php">
                     <div class="preview-thumbnail">

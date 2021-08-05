@@ -7,7 +7,7 @@
       }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -162,6 +162,7 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->

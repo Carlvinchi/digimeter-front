@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">
     <!-- End plugin css for this page -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles --> 
@@ -62,38 +60,12 @@
             <!-- summary info card -->
             <?php include("./templates/metfo-card.php")?>
 
-            <!-- graph card -->
-            <div class="row">
-              <div class="col-lg-12 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Water Consumption Graph</h4>
-                    <canvas id="myChart" style="height:250px"></canvas>
-                  </div>
-                </div>
-              </div>
-              
-            </div> 
-
-            <!-- graph card -->
-            <div class="row">
-              <div class="col-lg-12 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Water Consumption Cost Graph</h4>
-                    <canvas id="myChart2" style="height:250px"></canvas>
-                  </div>
-                </div>
-              </div>
-              
-            </div> 
-
           <!-- table contnent card file -->
           <div class="row ">
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Meter Readings</h4>
+                    <h4 class="card-title">Recent Payments</h4>
                    
                     <div class="table-responsive">
                     <input type="hidden" id="customerID" value="<?php echo $_GET['customer_id']?>">
@@ -103,13 +75,18 @@
                         <thead>
                           <tr>
                             
-                          <th> Meter ID </th>
-                            <th> Volume </th>
-                            <th> Cost </th>
-                            <th> Date</th>
+                            <th> Meter Name </th>
+                            <th> Meter ID </th>
+                            <th> Customer ID </th>
+                            <th> Amount Paid </th>
+                            <th> Paid Status </th>
+                            <th> Transaction ID </th>
+                            <th> Mobile No </th>
+                            <th> Method </th>
+                            <th> Date </th>
                           </tr>
                         </thead>
-                        <tbody id="readings">
+                        <tbody id="tr_list">
                         
 
                         </tbody>  
@@ -162,13 +139,11 @@
             var customer_id = document.getElementById("customerID").value;
             var meter_id = document.getElementById("meterID").value;
 			      var page_no = document.getElementById("page_no").value;
-            //load(meter_id,customer_id,page_no,backURL);
+            load(meter_id,customer_id,page_no,backURL);
             get_meter_detail(customer_id,meter_id);
             get_meter_bal(meter_id);
             get_pay_sum(meter_id,customer_id);
-            readings(backURL,page_no,meter_id);
-            draw(meter_id,backURL);
-            draw2(meter_id,backURL);
+            
           
 
 			$("#load_more").click(function() {
@@ -185,7 +160,60 @@
       });
         });
 
-		
+		//  function to automatically load data when page loads
+        function load(meter_id,customer_id,page_no,backURL){
+            $.ajax(
+                {
+                    url: backURL+"web_payments.php?customer_id="+customer_id+"&pay_data&meter_id="+meter_id+"&no="+page_no,
+                    method: "GET",
+
+                    success: function(data){
+						if(data != 0){
+							var content = document.getElementById("tr_list");  
+                        content.innerHTML = content.innerHTML + data;
+						// We increase the value by 25 because we limit the results by 25
+						document.getElementById("page_no").value = Number(page_no) + 30;
+						}
+						else{
+							 $("#load_more").hide();
+						}
+                       
+                    }
+                }
+            );
+
+        }
+
+        function load_more(){
+          var backURL = "http://localhost/digi_rest/api/";
+
+            var frontURL = "http://localhost/digifront/in/";
+            var customer_id = document.getElementById("customerID").value;
+            var meter_id = document.getElementById("meterID").value;
+			      var page_no = document.getElementById("page_no").value;
+
+            $.ajax(
+                {
+                  url: backURL+"web_payments.php?customer_id="+customer_id+"&pay_data&meter_id="+meter_id+"&no="+page_no,
+                    method: "GET",
+
+                    success: function(data){
+						if(data != 0){
+							var content = document.getElementById("tr_list");  
+                  content.innerHTML = content.innerHTML + data;
+						// We increase the value by 25 because we limit the results by 25
+						document.getElementById("page_no").value = Number(page_no) + 30;
+						}
+						else{
+							 $("#load_more").hide();
+						}
+                       
+                    }
+                }
+            );
+
+        }
+
         function get_meter_detail(customer_id,meter_id){
             var backURL = "http://localhost/digi_rest/api/";
             $.ajax(
@@ -281,168 +309,7 @@
 
         }
 
-       // function to automatically load data when page loads
-        function readings(backURL,page_no,m_id){
-            console.log('fire')
-            $.ajax(
-                {
-                    url: backURL+"web_get_alias_meters.php?no="+page_no+"&get_readings&m_id="+m_id,
-                    method: "GET",
-
-                    success: function(data){
-						if(data != 0){
-                           // console.log(data);
-							var content = document.getElementById("readings");  
-                        content.innerHTML = content.innerHTML + data;
-						// We increase the value by 25 because we limit the results by 25
-						document.getElementById("page_no").value = Number(page_no) + 30;
-						}
-						else{
-                            console.log(data);
-							 $("#load_more").hide();
-						}
-                       
-                    }
-                }
-            );
-
-        }
-
-        
-        function load_more(){
-          var backURL = "http://localhost/digi_rest/api/";
-            var frontURL = "http://localhost/digifront/in/";
-            var m_id = document.getElementById("meterID").value;
-            
-            //var userid = document.getElementById("user").value;
-            var page_no = document.getElementById("page_no").value;
-            $.ajax(
-                {
-                    url: backURL+"web_get_alias_meters.php?no="+page_no+"&get_readings&m_id="+m_id,
-                    method: "GET",
-
-                    success: function(data){
-						if(data != 0){
-                           // console.log(data);
-							var content = document.getElementById("readings");  
-                        content.innerHTML = content.innerHTML + data;
-						// We increase the value by 25 because we limit the results by 25
-						document.getElementById("page_no").value = Number(page_no) + 30;
-						}
-						else{
-                            console.log(data);
-							 $("#load_more").hide();
-						}
-                       
-                    }
-                }
-            );
-
-        }
-        // for plotting graph
-      async function draw(meter_id,backURL){
-            //var backURL = "http://localhost/digi_rest/api/";
-            var myData = [];
-          await  $.ajax(
-                {
-                    url: backURL+"web_get_alias_meters.php?meter_id="+meter_id+"&get_all_readings",
-                    method: "GET",
-
-                    success: function(data){
-                      if(data != 0){
-                        json_data = JSON.parse(data) 
-                        console.log(json_data);
-                        
-                        myData = json_data;
-                        var volume = myData.map( (x) => x.volume_consumed);
-                        var reading_date = myData.map( (x) => x.entry_time);
-                        
-            var ctx = document.getElementById('myChart').getContext('2d');
-              var myChart = new Chart(ctx, {
-                  type: 'line',
-                  data: {
-                      labels: reading_date,
-                      datasets: [{
-                          label: 'Volume Consumed',
-                          data: volume,
-                        
-                          fill: false,
-                          borderColor: 'rgb(75, 192, 192)',
-                          tension: 0.1
-                      }]
-                  },
-                  options: {
-                      scales: {
-                          y: {
-                              beginAtZero: true
-                          }
-                      }
-                  }
-              });
-
-                      }
-                      
-                    }
-                }
-            );
-
-           // v = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
-            //v.map((x) => console.log(x));
-
-        }
-
-
-         // for plotting graph
-      async function draw2(meter_id,backURL){
-            //var backURL = "http://localhost/digi_rest/api/";
-            var myData = [];
-          await  $.ajax(
-                {
-                    url: backURL+"web_get_alias_meters.php?meter_id="+meter_id+"&get_all_readings",
-                    method: "GET",
-
-                    success: function(data){
-                      if(data != 0){
-                        json_data = JSON.parse(data) 
-                        console.log(json_data);
-                        
-                        myData = json_data;
-                        var volume = myData.map( (x) => x.volume_consumed);
-                        var cost = myData.map( (x) => x.cost);
-                        
-            var ctx = document.getElementById('myChart2').getContext('2d');
-              var myChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                      labels: cost,
-                      datasets: [{
-                          label: 'Volume Consumed/Cost ',
-                          data: volume,
-                          backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                          borderColor:  'rgba(255, 99, 132, 1)',
-                          borderWidth: 1
-                      }]
-                  },
-                  options: {
-                      scales: {
-                          y: {
-                              beginAtZero: true
-                          }
-                      }
-                  }
-              });
-
-                      }
-                      
-                    }
-                }
-            );
-
-           // v = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
-            //v.map((x) => console.log(x));
-
-        }
-
+       
 </script>
     <!-- End custom js for this page -->
   </body>

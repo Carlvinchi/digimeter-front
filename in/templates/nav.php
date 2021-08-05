@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="index.php"><img src="assets/images/logo.svg" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="index.php"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="index.php"><img src="assets/images/logo.png" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo-mini" href="index.php"><img src="assets/images/logo.png" alt="logo" /></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
@@ -47,7 +47,7 @@
 
 
           <li class="nav-item menu-items">
-            <a class="nav-link" href="support.php">
+            <a class="nav-link" href="https://api.whatsapp.com/send?phone=233543524033">
               <span class="menu-icon">
                 <i class="mdi mdi-contacts"></i>
               </span>

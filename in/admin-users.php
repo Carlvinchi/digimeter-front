@@ -5,14 +5,14 @@
         header("location: $domain");
         exit();
       }
-?> 
-<!DOCTYPE html>  
+?>
+<!DOCTYPE html>
 <html lang="en"> 
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Digimeter Admin Dashboard</title>
+    <title>Digimeter Admins</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -52,9 +52,16 @@
 
           <?php include("./templates/admin-add-meter.php")?>
 
-        <!-- top up modal -->
+          <?php include("./templates/add-admin-modal.php")?>
+    
+
+            <!-- top up modal -->
 
             <?php include("./templates/topup-modal.php")?>
+
+            <!-- edit meter modal -->
+
+            <?php include("./templates/admin-edit.php")?>
 
             <!-- Modal to show delete confirmation-->
 				<div class="modal fade bs-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
@@ -97,10 +104,7 @@
 
             <!-- summary info card -->
 
-            
             <?php include("./templates/admin-scard.php")?>
-
-
 
           <!-- table contnent card file -->
 
@@ -109,7 +113,10 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Users
+                    <h4 class="card-title">Admins &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+                    &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+                    &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
+                        <button class="btn btn-success mr-2" data-toggle="modal" data-target="#add-admin">+ Create Admin</button>
                     </h4>
                    
                     <div class="table-responsive">
@@ -119,20 +126,14 @@
                         <thead>
                           <tr>
                             
+                            <th> Email </th>
                             <th> First Name </th>
                             <th> Last Name </th>
-                            <th> Customer ID </th>
-                            <th> Email</th>
-                            <th> Phone </th>
-                            <th> Digital Addr </th>
-                            <th> Street</th>
-                            <th> City </th>
-                            <th> Region </th>
-                            <th> Last Login </th>
-                            
+                            <th> Mobile</th>
+                         
                           </tr>
                         </thead>
-                        <tbody id="users">
+                        <tbody id="admin-list">
                           
 
                         </tbody>
@@ -159,6 +160,7 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
@@ -179,6 +181,7 @@
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
     <script src="js/add-meter.js"></script>
+    <script src="js/add-admin.js"></script>
     <script src="js/edit-alias.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -204,13 +207,13 @@
             console.log('fire')
             $.ajax(
                 {
-                    url: backURL+"admin_service.php?no="+page_no+"&all_users",
+                    url: backURL+"admin_service.php?no="+page_no+"&admin-list",
                     method: "GET",
 
                     success: function(data){
 						if(data != 0){
                            // console.log(data);
-							var content = document.getElementById("users");  
+							var content = document.getElementById("admin-list");  
                         content.innerHTML = content.innerHTML + data;
 						// We increase the value by 25 because we limit the results by 25
 						document.getElementById("page_no").value = Number(page_no) + 30;
@@ -233,13 +236,13 @@
             var page_no = document.getElementById("page_no").value;
             $.ajax(
                 {
-                    url: backURL+"admin_service.php?no="+page_no+"&all_users",
+                    url: backURL+"admin_service.php?no="+page_no+"&admin-list",
                     method: "GET",
 
                     success: function(data){
 						if(data != 0){
                            // console.log(data);
-							var content = document.getElementById("users");  
+							var content = document.getElementById("admin-list");  
                         content.innerHTML = content.innerHTML + data;
 						// We increase the value by 25 because we limit the results by 25
 						document.getElementById("page_no").value = Number(page_no) + 30;
@@ -304,33 +307,64 @@
 
         }
 
+        function get_details(meter_id){
+            var backURL = "http://localhost/digi_rest/api/";
+            $.ajax(
+                {
+                    url: backURL+"admin_service.php?meter_id="+meter_id+"&single_detail",
+                    method: "GET",
+
+                    success: function(data){
+						if(data != 0){
+
+							var append = document.getElementById("edit-detail"); 
+							append.innerHTML = ""; 
+                        append.innerHTML = append.innerHTML + data;
+						setTimeout(() => {  $("#edit-admin").modal('show'); }, 100);
+						// We increase the value by 25 because we limit the results by 25
+						//document.getElementById("page_no").value = Number(page_no) + 25;
+						}
+						else{
+							 $("#load_more").hide();
+						}
+                       
+                    }
+                }
+            );
+
+        }
+
         function edit(){
             var backURL = "http://localhost/digi_rest/api/";
             var frontURL = "http://localhost/digifront/in/";
             console.log("Hi");
-            var meter_id = $("#mter_id").val();
-            var customer_id = $("#cust_id").val();
-            var alias = $("#alias_name").val();
+            var meter_id = $("#m_id").val();
+            var meter_owner = $("#m_owner").val();
+            var m_bal = $("#mt_bal").val();
+            var m_addr = $("#m_addr").val();
+            var i_no = $("#item_no").val();
             
             setTimeout(100);
             
             $.ajax({
-                url: backURL+"web_get_alias_meters.php", 
+                url: backURL+"admin_service.php", 
 
                 method: "POST",
 
                 data: {
-                    mter_id: meter_id,
-                    cust_id: customer_id,
-                    alias: alias,
-                    edit_alias:1
+                    m_id: meter_id,
+                    m_owner: meter_owner,
+                    m_bal: m_bal,
+                    m_addr: m_addr,
+                    item_no: i_no,
+                    edit:1
                 },
 
                 success: function(data){
 
                     if(data == "Success"){
                         alert(data);
-                        location.replace(frontURL+"index.php");
+                        location.replace(frontURL+"meters.php");
                     }
                         
                     else{
@@ -343,29 +377,28 @@
         }
 
         // function to confirm user action before deleting
-		function confirm_delete(customer_id,meter_id){
+		function confirm_delete(meter_id){
 		
         $("#deleteModal").modal('show')
         $("#delete").click(function(){
-            delet(customer_id,meter_id);
+            delet(meter_id);
         });
         
         }
 
-        function delet(customer_id,meter_id){
+        function delet(meter_id){
             var backURL = "http://localhost/digi_rest/api/";
             var frontURL = "http://localhost/digifront/in/";
             
             setTimeout(100);
             
             $.ajax({
-                url: backURL+"web_get_alias_meters.php", 
+                url: backURL+"admin_service.php", 
 
                 method: "POST",
 
                 data: {
-                    mter_id: meter_id,
-                    cust_id: customer_id,
+                    m_id: meter_id,
                     delete:1
                 },
 
@@ -373,7 +406,7 @@
 
                     if(data == "Success"){
                         alert(data);
-                        location.replace(frontURL+"index.php");
+                        location.replace(frontURL+"meters.php");
                     }
                         
                     else{
@@ -392,12 +425,12 @@
             setTimeout(100);
             
             $.ajax({
-                url: backURL+"web_get_alias_meters.php", 
+                url: backURL+"admin_service.php", 
 
                 method: "POST",
 
                 data: {
-                    mter_id: meter_id,
+                    m_id: meter_id,
                     lock:1
                 },
 
@@ -405,7 +438,7 @@
 
                     if(data == "Success"){
                         alert(data);
-                        location.replace(frontURL+"index.php");
+                        location.replace(frontURL+"meters.php");
                     }
                         
                     else{
@@ -416,7 +449,6 @@
                 }
             });
         }
-
 
         function add_payment(){
             var backURL = "http://localhost/digi_rest/api/";

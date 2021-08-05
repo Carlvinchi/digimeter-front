@@ -12,7 +12,7 @@
                         <h6 ><a class="btn btn-success mr-2" href="meters.php">View Meters</a></h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
+                        <i class="icon-lg mdi mdi-speedometer text-primary ml-auto"></i>
                       </div>
                     </div>
                   </div>
@@ -32,7 +32,7 @@
                         <h6 ><a class="btn btn-success mr-2" href="admin.php">View Users</a></h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-wallet-travel text-danger ml-auto"></i>
+                        <i class="icon-lg mdi mdi-account text-danger ml-auto"></i>
                       </div>
                     </div>
                   </div>
